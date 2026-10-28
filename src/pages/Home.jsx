@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { obtenerProductos } from "../services/mockApi";
+import { obtenerProductos } from "../services/MockApi.js";
 import ProductGrid from "../components/ProductGrid/ProductGrid";
 import usePageTitle from "../hooks/usePageTitle";
 import "./Home.css";

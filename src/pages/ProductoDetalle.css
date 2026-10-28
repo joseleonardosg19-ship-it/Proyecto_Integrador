@@ -36,6 +36,37 @@
   text-underline-offset: 3px;
 }
 
+.add-to-cart-button {
+  min-height: 38px;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: var(--green);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.add-to-cart-button:hover:not(:disabled) {
+  background: var(--mint-dark);
+}
+
+.add-to-cart-button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
+.detail-add-button {
+  display: block;
+  margin: 14px 0 8px;
+}
+
+.cart-feedback {
+  margin: 8px 0;
+  color: var(--green);
+  font-size: .85rem;
+}
+
 .page-message {
   color: var(--text-soft);
   padding: 48px 24px;

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { obtenerProductoPorId } from "../services/mockApi";
+import { obtenerProductoPorId } from "../services/MockApi.js";
 import { formatearPrecio } from "../utils/formatters";
+import { useCart } from "../context/CartContext.jsx";
 import Loader from "../components/Loader/Loader";
 import usePageTitle from "../hooks/usePageTitle";
 import "./ProductoDetalle.css";
@@ -9,6 +10,8 @@ import "./ProductoDetalle.css";
 export default function ProductoDetalle() {
   const { id } = useParams();
   const [resultado, setResultado] = useState({ id: null, producto: null, cargando: true });
+  const [mensajeCarrito, setMensajeCarrito] = useState("");
+  const { addToCart } = useCart();
   const { producto, cargando } = resultado;
 
   usePageTitle(producto?.nombre || "Detalle del producto");
@@ -56,6 +59,17 @@ export default function ProductoDetalle() {
         <p className={`stock-msg ${sinStock ? "agotado" : "disponible"}`}>
           {sinStock ? "Producto agotado" : `${producto.stock} disponibles`}
         </p>
+        <button
+          className="add-to-cart-button detail-add-button"
+          type="button"
+          disabled={sinStock}
+          onClick={() => setMensajeCarrito(
+            addToCart(producto.id) || `${producto.nombre} agregado al carrito.`,
+          )}
+        >
+          {sinStock ? "Agotado" : "Agregar al carrito"}
+        </button>
+        {mensajeCarrito && <p className="cart-feedback" role="status">{mensajeCarrito}</p>}
         <Link className="text-link" to="/productos">Volver al catálogo</Link>
       </div>
     </section>
