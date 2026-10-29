@@ -26,13 +26,12 @@
 }
 
 .checkout-image {
-  display: grid;
   width: 48px;
   height: 48px;
-  place-items: center;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
   border-radius: 9px;
   background: var(--bg);
-  font-size: 1.7rem;
 }
 
 .checkout-line h2 {

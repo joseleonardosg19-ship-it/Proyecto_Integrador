@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { obtenerProductoPorId } from "../services/MockApi.js";
 import { formatearPrecio } from "../utils/formatters";
 import { useCart } from "../context/CartContext.jsx";
+import ProductImage from "../components/ProductImage/ProductImage.jsx";
 import Loader from "../components/Loader/Loader";
 import usePageTitle from "../hooks/usePageTitle";
 import "./ProductoDetalle.css";
@@ -46,7 +47,7 @@ export default function ProductoDetalle() {
   return (
     <section className="detail-content">
       <div className="detail-imagen-wrap">
-        <span>{producto.imagen}</span>
+        <ProductImage imagen={producto.imagen} alt={producto.nombre} />
       </div>
 
       <div className="detail-info">

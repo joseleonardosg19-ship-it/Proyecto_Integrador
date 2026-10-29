@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext.jsx";
 import { formatearPrecio } from "../../utils/formatters";
+import ProductImage from "../ProductImage/ProductImage.jsx";
 
 export default function ProductCard({ producto }) {
   const sinStock = producto.stock === 0;
@@ -11,7 +12,9 @@ export default function ProductCard({ producto }) {
   return (
     <article className="product-card">
       <Link className="product-card-link" to={`/productos/${producto.id}`}>
-        <div className="product-imagen">{producto.imagen}</div>
+        <div className="product-imagen">
+          <ProductImage imagen={producto.imagen} alt={producto.nombre} />
+        </div>
         <div className="product-main">
           <span className="product-categoria">{producto.categoria}</span>
           <h3>{producto.nombre}</h3>

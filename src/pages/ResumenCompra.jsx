@@ -1,6 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
 import { useDemoAuth } from "../context/DemoAuthContext.jsx";
+import ProductImage from "../components/ProductImage/ProductImage.jsx";
 import { formatearPrecio } from "../utils/formatters.js";
 import usePageTitle from "../hooks/usePageTitle.js";
 import "./ResumenCompra.css";
@@ -31,7 +32,11 @@ export default function ResumenCompra() {
         <div className="checkout-lines">
           {items.map(({ product, quantity, subtotal }) => (
             <article className="checkout-line" key={product.id}>
-              <span className="checkout-image" aria-hidden="true">{product.imagen}</span>
+              <ProductImage
+                className="checkout-image"
+                imagen={product.imagen}
+                alt={product.nombre}
+              />
               <div>
                 <h2>{product.nombre}</h2>
                 <p>{quantity} × {formatearPrecio(product.precio)}</p>

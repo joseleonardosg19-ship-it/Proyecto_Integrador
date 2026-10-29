@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
 import { useDemoAuth } from "../context/DemoAuthContext.jsx";
+import ProductImage from "../components/ProductImage/ProductImage.jsx";
 import { formatearPrecio } from "../utils/formatters.js";
 import usePageTitle from "../hooks/usePageTitle.js";
 import "./Carrito.css";
@@ -34,7 +35,11 @@ export default function Carrito() {
           <div className="cart-items" aria-label="Productos en el carrito">
             {items.map(({ product, quantity, subtotal }) => (
               <article className="cart-item" key={product.id}>
-                <div className="cart-item-image" aria-hidden="true">{product.imagen}</div>
+                <ProductImage
+                  className="cart-item-image"
+                  imagen={product.imagen}
+                  alt={product.nombre}
+                />
                 <div className="cart-item-details">
                   <h2>{product.nombre}</h2>
                   <p>Precio unitario: {formatearPrecio(product.precio)}</p>
