@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
+import { useCart } from "../../context/CartContext.jsx";
 import "./Navbar.css";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
+  const { itemCount } = useCart();
   const navigate = useNavigate();
 
   function handleBuscar(e) {
@@ -28,16 +30,19 @@ export default function Navbar() {
         <div className="nav-actions">
           <Link to="/" className="nav-link">Inicio</Link>
           <Link to="/productos" className="nav-link">Productos</Link>
-        <button
-          className="theme-toggle"
-          type="button"
-          onClick={toggleTheme}
-          aria-label={`Cambiar a tema ${theme === "light" ? "oscuro" : "claro"}`}
-          aria-pressed={theme === "dark"}
-          title={`Tema ${theme === "light" ? "oscuro" : "claro"}`}
-        >
-          <span aria-hidden="true">{theme === "light" ? "☾" : "☀"}</span>
-        </button>
+          <Link to="/carrito" className="nav-link cart-nav-link">
+            Carrito{itemCount > 0 && <span className="cart-count">{itemCount}</span>}
+          </Link>
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={toggleTheme}
+            aria-label={`Cambiar a tema ${theme === "light" ? "oscuro" : "claro"}`}
+            aria-pressed={theme === "dark"}
+            title={`Tema ${theme === "light" ? "oscuro" : "claro"}`}
+          >
+            <span aria-hidden="true">{theme === "light" ? "☾" : "☀"}</span>
+          </button>
         </div>
       </nav>
     </header>

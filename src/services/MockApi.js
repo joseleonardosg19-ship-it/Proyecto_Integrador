@@ -1,3 +1,4 @@
+
 import { mockProductos } from "../data/MockProductos.jsx";
 
 function delayMock(ms = 300) {
@@ -11,6 +12,10 @@ export async function obtenerProductos() {
 
 export async function obtenerProductoPorId(id) {
   await delayMock();
-  const producto = mockProductos.find((p) => p.id === Number(id));
+
+  const producto = mockProductos.find(
+    (producto) => producto.id === Number(id)
+  );
+
   return producto || null;
 }

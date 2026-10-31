@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { obtenerProductos } from "../services/mockApi";
+import { obtenerProductos } from "../services/MockApi.js";
 import ProductGrid from "../components/ProductGrid/ProductGrid";
 import usePageTitle from "../hooks/usePageTitle";
 import "./Productos.css";
