@@ -26,8 +26,8 @@
 
 /* Marca (mismos colores que el logo de la barra superior) */
 .footer-logo {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-weight: 700;
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: -0.3px;
@@ -37,7 +37,7 @@
 }
 
 .footer-logo span {
-  color: var(--green);
+  color: var(--accent);
 }
 
 .footer-desc {
@@ -62,7 +62,7 @@
 }
 
 .footer-links a:hover {
-  color: var(--green);
+  color: var(--accent);
 }
 
 /* Íconos de redes sociales */

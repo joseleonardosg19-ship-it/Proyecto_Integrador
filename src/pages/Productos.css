@@ -1,4 +1,4 @@
-/* --- BARRA DE FILTROS Y BOTONES --- */
+/* --- Barra de filtros --- */
 .filtros-bar {
   display: flex;
   flex-wrap: wrap;
@@ -14,48 +14,44 @@
   flex: 1;
 }
 
-/* Botones de categoría (Inactivos / Base) */
 .btn-filtro {
-  background: #ffffff;
-  border: 1px solid #cbd5e1; /* Borde gris suave y elegante */
-  color: #334155;            /* Texto oscuro legible */
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
   padding: 8px 16px;
   border-radius: 999px;
   cursor: pointer;
-  font-size: .85rem;
+  font-size: var(--text-sm);
   font-weight: 600;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s ease-in-out;
 }
 
-/* Efecto al pasar el cursor (Hover) */
 .btn-filtro:hover {
-  background: #f1f5f9;
-  border-color: #94a3b8;
-  color: #0f172a;
+  background: var(--surface-soft);
+  border-color: var(--text-soft);
 }
 
-/* Estado Activo (Cuando seleccionas la categoría) - Adiós al verde fosforescente */
 .btn-filtro.active {
-  background: #2563eb;       /* Azul moderno y corporativo */
-  border-color: #2563eb;
-  color: #ffffff;            /* Texto blanco para contrastar */
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); /* Sombra azul sutil */
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
-/* Selector desplegable de la barra de filtros */
 .filtros-bar select {
   padding: 9px 12px;
   border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  background: #ffffff;
-  color: #334155;
-  font-size: .9rem;
-  outline: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-sm);
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color var(--transition);
 }
 
-.filtros-bar select:focus {
-  border-color: #2563eb;
+.filtros-bar select:hover {
+  border-color: var(--text-soft);
+}
+
+.filtros-bar select:focus-visible {
+  border-color: var(--accent);
 }

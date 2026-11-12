@@ -1,6 +1,5 @@
 @import "./variables.css";
 
-/* Selector universal corregido (era - en lugar de *) */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,19 +8,29 @@
 
 body {
   min-width: 320px;
-  font-family: "DM Sans", Arial, sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
   background: var(--bg);
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
   transition: background-color var(--transition), color var(--transition);
-  overflow-x: hidden; /* Evita barras de desplazamiento horizontal indeseadas */
+  overflow-x: hidden;
 }
 
 h1,
 h2,
 h3 {
-  font-family: "Syne", Arial, sans-serif;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text);
 }
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-lg); }
 
 button,
 input,
@@ -43,31 +52,22 @@ a {
   text-decoration: none;
 }
 
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .main-layout-content {
   flex: 1;
   width: 100%;
   padding-top: calc(var(--header-height) + 24px);
-  /* Eliminamos padding-bottom forzado para que el footer no deje un espacio en blanco gigante debajo */
-  padding-bottom: 40px; 
-}
-
-.auth-layout {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
+  padding-bottom: 40px;
 }
 
 .page-message {
   padding: 48px 24px;
   color: var(--text-soft);
   text-align: center;
-}
-
-.section-heading {
-  padding: 32px 32px 0;
-  font-size: 1.3rem;
-  color: var(--green-deep);
 }
 
 .products-grid {
@@ -79,38 +79,32 @@ a {
   margin: 0 auto;
 }
 
+/* --- Tarjeta de producto --- */
 .product-card {
   display: block;
   background: var(--surface);
   border-radius: var(--radius);
-  border: 2px solid transparent;
+  border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  cursor: pointer;
   overflow: hidden;
+  position: relative;
+  text-align: left;
   transition:
     border-color var(--transition),
     box-shadow var(--transition),
     transform var(--transition);
-  position: relative;
-  text-align: left;
 }
-.product-card:hover {
-  border-color: #3b82f6; /* Actualizado al tono azul corporativo de la tienda */
-  box-shadow: 0 14px 36px rgba(0, 60, 150, 0.18);
-  transform: translateY(-4px);
+.product-card:hover,
+.product-card:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-hover);
 }
+.product-card:hover { transform: translateY(-4px); }
 .product-card-link { display: block; }
-.product-card-link:focus-visible {
-  outline: 3px solid #3b82f6;
-  outline-offset: -3px;
-}
+.product-card-link:focus-visible { outline-offset: -3px; }
 .product-card .product-main:last-child { padding-top: 0; }
 .product-card .badge-agotado { z-index: 1; }
 .product-card .cart-feedback { min-height: 1.2em; }
-.product-card:focus-visible {
-  outline: 3px solid #3b82f6;
-  outline-offset: 3px;
-}
 
 .product-imagen {
   width: 100%;
@@ -135,38 +129,41 @@ a {
 
 .product-main { padding: 14px 16px 18px; }
 .product-categoria {
-  font-size: .72rem;
+  font-size: var(--text-xs);
   font-weight: 700;
-  color: #3b82f6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
-.product-main h3 { font-size: 1.05rem; margin: 4px 0 6px; color: var(--green-deep); }
-.product-precio { font-weight: 700; color: var(--text); }
+.product-main h3 { font-size: var(--text-lg); margin: 4px 0 6px; }
+.product-precio {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
 
+/* --- Botones --- */
 .add-to-cart-button:hover:not(:disabled),
 .commerce-button:hover {
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--accent-hover);
+  color: var(--on-accent);
   box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
   transform: translateY(-1px);
 }
 
-.add-to-cart-button:focus-visible,
-.commerce-button:focus-visible,
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible {
-  outline: 3px solid #3b82f6;
-  outline-offset: 3px;
+.add-to-cart-button:active:not(:disabled),
+.commerce-button:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .badge-agotado {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #ef4444;
-  color: #fff;
-  font-size: .7rem;
+  background: #c62828;
+  color: #ffffff;
+  font-size: var(--text-xs);
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 999px;
@@ -176,10 +173,19 @@ select:focus-visible {
   text-align: center;
   color: var(--text-soft);
   padding: 60px 20px;
-  font-size: 1.05rem;
+  font-size: var(--text-lg);
 }
 
 @media (max-width: 640px) {
-  .section-heading { padding: 24px 16px 0; }
   .products-grid { padding: 20px 16px 36px; gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .product-card:hover { transform: none; }
 }

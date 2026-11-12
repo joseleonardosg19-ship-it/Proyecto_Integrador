@@ -36,7 +36,7 @@
 
 .checkout-line h2 {
   margin: 0 0 3px;
-  color: var(--green-deep);
+  color: var(--text);
   font-size: 1rem;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .checkout-line > strong {
-  color: var(--green-deep);
+  color: var(--text);
   text-align: right;
 }
 
@@ -59,7 +59,7 @@
 }
 
 .checkout-total strong {
-  color: var(--green-deep);
+  color: var(--text);
   text-align: right;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .checkout-back {
-  color: var(--green);
+  color: var(--accent);
   font-weight: 700;
   text-decoration: underline;
 }

@@ -16,9 +16,9 @@
 
 .graficos-eyebrow {
   margin-bottom: 6px;
-  color: #087f8c;
-  font-size: 0.72rem;
-  font-weight: 800;
+  color: var(--accent);
+  font-size: var(--text-xs);
+  font-weight: 700;
   letter-spacing: 0.08em;
 }
 
@@ -35,16 +35,16 @@
 .graficos-refresh {
   min-height: 42px;
   padding: 0 16px;
-  border: 1px solid #087f8c;
-  border-radius: 6px;
-  background: #087f8c;
-  color: #fff;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
   cursor: pointer;
   font-weight: 700;
 }
 
 .graficos-refresh:hover:not(:disabled) {
-  background: #066670;
+  background: var(--accent-hover);
 }
 
 .graficos-refresh:disabled {
@@ -175,4 +175,4 @@
   .graficos-chart {
     height: 265px;
   }
-}
+}
