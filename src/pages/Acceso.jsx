@@ -1,77 +1,94 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDemoAuth } from "../context/DemoAuthContext.jsx";
-import { DEMO_ACCOUNT } from "../services/demoAuth.js";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 import usePageTitle from "../hooks/usePageTitle.js";
 import "./Acceso.css";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MIN_PASSWORD_LENGTH = 6;
+const MAX_NAME_LENGTH = 50;
+const RETURN_TO = "/resumen";
 
 export default function Acceso() {
-  usePageTitle("Acceso de demostración");
+  usePageTitle("Acceso");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [error, setError] = useState("");
-  const { signIn, register } = useDemoAuth();
-  const location = useLocation();
+  const [submitting, setSubmitting] = useState(false);
+  const { signIn, register } = useAuth();
   const navigate = useNavigate();
-  const returnTo = location.state?.returnTo === "/resumen" ? "/resumen" : "/resumen";
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    setError("");
-
-    if (!email.trim() || !password) {
-      setError("Completa el correo electrónico y la contraseña.");
-      return;
+  function validate() {
+    if (isRegistering && !nombre.trim()) return "Ingresa tu nombre.";
+    if (isRegistering && nombre.trim().length > MAX_NAME_LENGTH) {
+      return `El nombre no puede superar los ${MAX_NAME_LENGTH} caracteres.`;
     }
-    if (!EMAIL_PATTERN.test(email.trim())) {
-      setError("Ingresa un correo electrónico válido.");
-      return;
-    }
+    if (!email.trim() || !password) return "Completa el correo electrónico y la contraseña.";
+    if (!EMAIL_PATTERN.test(email.trim())) return "Ingresa un correo electrónico válido.";
     if (isRegistering) {
-      if (!confirmation) {
-        setError("Confirma tu contraseña para continuar.");
-        return;
+      if (password.length < MIN_PASSWORD_LENGTH) {
+        return `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`;
       }
-      if (password !== confirmation) {
-        setError("Las contraseñas no coinciden.");
-        return;
-      }
-      register(email);
-      navigate(returnTo, { replace: true });
-      return;
+      if (password !== confirmation) return "Las contraseñas no coinciden.";
     }
-
-    if (!signIn(email, password)) {
-      setError("Los datos no coinciden con la cuenta de demostración.");
-      return;
-    }
-    navigate(returnTo, { replace: true });
+    return "";
   }
 
-  function fillDemoAccount() {
-    setEmail(DEMO_ACCOUNT.email);
-    setPassword(DEMO_ACCOUNT.password);
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setError("");
+    setSubmitting(true);
+    try {
+      if (isRegistering) {
+        await register({ nombre, email, password });
+      } else {
+        await signIn(email, password);
+      }
+      navigate(RETURN_TO, { replace: true });
+    } catch (requestError) {
+      setError(requestError.message);
+      setSubmitting(false);
+    }
+  }
+
+  function toggleMode() {
+    setIsRegistering((current) => !current);
     setError("");
   }
 
   return (
     <section className="auth-page">
       <div className="commerce-heading">
-        <p className="commerce-eyebrow">Compra de demostración</p>
+        <p className="commerce-eyebrow">Tu cuenta</p>
         <h1>{isRegistering ? "Crear cuenta" : "Iniciar sesión"}</h1>
       </div>
 
       <div className="auth-card">
-        <p className="demo-notice">
-          Esta autenticación es solo una demostración local. No se conecta a un servidor
-          ni guarda las cuentas de forma persistente.
-        </p>
-
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
+          {isRegistering && (
+            <>
+              <label htmlFor="auth-nombre">Nombre</label>
+              <input
+                id="auth-nombre"
+                type="text"
+                autoComplete="name"
+                maxLength={MAX_NAME_LENGTH}
+                value={nombre}
+                onChange={(event) => setNombre(event.target.value)}
+                required
+              />
+            </>
+          )}
+
           <label htmlFor="auth-email">Correo electrónico</label>
           <input
             id="auth-email"
@@ -108,31 +125,16 @@ export default function Acceso() {
 
           {error && <p className="auth-error" role="alert">{error}</p>}
 
-          <button className="commerce-button auth-submit" type="submit">
-            {isRegistering ? "Crear cuenta de demostración" : "Iniciar sesión"}
+          <button className="commerce-button auth-submit" type="submit" disabled={submitting}>
+            {submitting
+              ? "Procesando..."
+              : isRegistering ? "Crear cuenta" : "Iniciar sesión"}
           </button>
         </form>
 
-        <button
-          className="auth-mode-toggle"
-          type="button"
-          onClick={() => {
-            setIsRegistering((current) => !current);
-            setError("");
-          }}
-        >
+        <button className="auth-mode-toggle" type="button" onClick={toggleMode}>
           {isRegistering ? "Ya tengo una cuenta: iniciar sesión" : "Crear una cuenta"}
         </button>
-
-        {!isRegistering && (
-          <aside className="demo-credentials">
-            <h2>Cuenta de demostración</h2>
-            <p>Correo: <code>{DEMO_ACCOUNT.email}</code></p>
-            <p>Contraseña: <code>{DEMO_ACCOUNT.password}</code></p>
-            <button type="button" onClick={fillDemoAccount}>Usar esta cuenta</button>
-            <small>Estas credenciales ficticias son visibles en el código y no son seguras para producción.</small>
-          </aside>
-        )}
 
         <div className="auth-links">
           <Link to="/carrito">Volver al carrito</Link>

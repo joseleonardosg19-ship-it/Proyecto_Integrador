@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.jsx";
-import Home from "./pages/Home.jsx"; // <-- 1. Importa la página de Inicio
+import Home from "./pages/Home.jsx";
 import Productos from "./pages/Productos.jsx";
 import ProductoDetalle from "./pages/ProductoDetalle.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
-import { DemoAuthProvider } from "./context/DemoAuthContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 import Carrito from "./pages/Carrito.jsx";
 import Acceso from "./pages/Acceso.jsx";
 import ResumenCompra from "./pages/ResumenCompra.jsx";
@@ -15,7 +15,7 @@ export default function AppRoutes() {
   return (
     <ThemeProvider>
       <CartProvider>
-        <DemoAuthProvider>
+        <AuthProvider>
           <Routes>
             <Route element={<MainLayout />}>
               {/* 2. La ruta raíz (/) ahora apunta a Home (la portada) */}
@@ -32,8 +32,8 @@ export default function AppRoutes() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>
-        </DemoAuthProvider>
+        </AuthProvider>
       </CartProvider>
     </ThemeProvider>
   );
-}
+}

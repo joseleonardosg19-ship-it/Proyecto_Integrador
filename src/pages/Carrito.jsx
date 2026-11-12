@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
-import { useDemoAuth } from "../context/DemoAuthContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import ProductImage from "../components/ProductImage/ProductImage.jsx";
 import { formatearPrecio } from "../utils/formatters.js";
 import usePageTitle from "../hooks/usePageTitle.js";
@@ -9,7 +9,7 @@ import "./Carrito.css";
 export default function Carrito() {
   usePageTitle("Carrito");
   const { items, total, itemCount, updateQuantity, removeFromCart } = useCart();
-  const { user } = useDemoAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   function handleCheckout() {

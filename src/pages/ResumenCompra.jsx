@@ -1,6 +1,6 @@
 import { Link, Navigate } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
-import { useDemoAuth } from "../context/DemoAuthContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import ProductImage from "../components/ProductImage/ProductImage.jsx";
 import { formatearPrecio } from "../utils/formatters.js";
 import usePageTitle from "../hooks/usePageTitle.js";
@@ -8,7 +8,7 @@ import "./ResumenCompra.css";
 
 export default function ResumenCompra() {
   usePageTitle("Resumen de compra");
-  const { user } = useDemoAuth();
+  const { user } = useAuth();
   const { items, total, itemCount } = useCart();
 
   if (!user) {
@@ -27,7 +27,7 @@ export default function ResumenCompra() {
 
       <div className="checkout-card">
         <p className="checkout-account">
-          Sesión de demostración: <strong>{user.email}</strong>
+          Sesión iniciada como <strong>{user.nombre}</strong> ({user.email})
         </p>
         <div className="checkout-lines">
           {items.map(({ product, quantity, subtotal }) => (

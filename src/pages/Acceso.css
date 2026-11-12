@@ -7,12 +7,6 @@
   box-shadow: var(--shadow);
 }
 
-.demo-notice {
-  margin-bottom: 20px;
-  color: var(--text-soft);
-  font-size: .9rem;
-}
-
 .auth-form {
   display: grid;
   gap: 9px;
@@ -20,8 +14,9 @@
 
 .auth-form label {
   margin-top: 8px;
-  color: var(--green-deep);
-  font-weight: 700;
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
 }
 
 .auth-form input {
@@ -34,8 +29,13 @@
   color: var(--text);
 }
 
-.auth-form input:focus {
-  outline: 2px solid var(--mint-dark);
+.auth-form input:hover {
+  border-color: var(--text-soft);
+}
+
+.auth-form input:focus-visible {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -44,48 +44,25 @@
   margin-top: 10px;
 }
 
+.auth-submit:disabled {
+  cursor: progress;
+  opacity: .7;
+  transform: none;
+}
+
 .auth-error {
   color: var(--error);
   font-size: .9rem;
 }
 
-.auth-mode-toggle,
-.demo-credentials button {
+.auth-mode-toggle {
   border: 0;
   background: none;
-  color: var(--green);
+  color: var(--accent);
   cursor: pointer;
   font-weight: 700;
-  text-decoration: underline;
-}
-
-.auth-mode-toggle {
   margin-top: 16px;
-}
-
-.demo-credentials {
-  display: grid;
-  gap: 8px;
-  margin-top: 22px;
-  border-radius: 10px;
-  padding: 16px;
-  background: var(--surface-soft);
-  color: var(--text-soft);
-  font-size: .85rem;
-}
-
-.demo-credentials h2 {
-  margin: 0;
-  color: var(--green-deep);
-  font-size: 1rem;
-}
-
-.demo-credentials code {
-  overflow-wrap: anywhere;
-}
-
-.demo-credentials small {
-  font-size: .75rem;
+  text-decoration: underline;
 }
 
 .auth-links {
@@ -96,7 +73,7 @@
 }
 
 .auth-links a {
-  color: var(--green);
+  color: var(--accent);
   font-size: .9rem;
   font-weight: 700;
   text-decoration: underline;
